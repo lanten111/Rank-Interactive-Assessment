@@ -9,6 +9,15 @@ public class PlayerDTO {
     private String playerId;
     private String username;
     private BigDecimal amount;
+    private String promotionCode;
+
+    public String getPromotionCode() {
+        return promotionCode;
+    }
+
+    public void setPromotionCode(String promotionCode) {
+        this.promotionCode = promotionCode;
+    }
 
     public String getPlayerId() {
         return playerId;
