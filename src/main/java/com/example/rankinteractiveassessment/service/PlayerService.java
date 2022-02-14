@@ -5,8 +5,8 @@ import com.example.rankinteractiveassessment.dto.PlayerDTO;
 import com.example.rankinteractiveassessment.exception.NoFundsException;
 import com.example.rankinteractiveassessment.exception.PlayerNotFoundException;
 import com.example.rankinteractiveassessment.repository.PlayerRepository;
+import com.example.rankinteractiveassessment.repository.PromotionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,6 +18,9 @@ public class PlayerService {
     @Autowired
     PlayerRepository playerRepository;
 
+    @Autowired
+    PromotionRepository promotionRepository;
+
     public BigDecimal getBalance(PlayerDTO playerDTO){
         return playerRepository.getByPlayerId(playerDTO.getPlayerId()).getAmount();
     }
@@ -25,21 +28,29 @@ public class PlayerService {
     @Transactional
     public void wager(PlayerDTO playerDTO){
         if (playerRepository.existsByPlayerId(playerDTO.getPlayerId())){
-//            if (!playerDTO.getPromotionCode().isEmpty()){
-//
-//            }
             Player player = playerRepository.getByPlayerId(playerDTO.getPlayerId());
-            BigDecimal newAmount = player.getAmount().subtract(playerDTO.getAmount());
-            if (newAmount.compareTo(BigDecimal.ZERO) <= 0){
-                throw new NoFundsException();
+            if ((!playerDTO.getPromotionCode().isEmpty() && promotionRepository.existsByCode(playerDTO.getPromotionCode())) || player.getPromotionCodeCount() <= 5){
+                if (!player.getPromotionCode().isEmpty()){
+                    player.setPromotionCode(playerDTO.getPromotionCode());
+                    player.setPromotionCodeCount(1);
+                    playerRepository.save(player);
+                } else {
+                    player.setPromotionCodeCount(+1);
+                    playerRepository.save(player);
+                }
             } else {
-                player.setAmount(newAmount);
-                playerRepository.save(player);
+                BigDecimal newAmount = player.getAmount().subtract(playerDTO.getAmount());
+                if (newAmount.compareTo(BigDecimal.ZERO) <= 0){
+                    throw new NoFundsException();
+                } else {
+                    player.setAmount(newAmount);
+                    playerRepository.save(player);
+                }
             }
+
         } else {
             throw new PlayerNotFoundException();
         }
-
     }
 
     @Transactional
@@ -49,6 +60,4 @@ public class PlayerService {
         player.setAmount(newAmount);
         playerRepository.save(player);
     }
-
-
 }
