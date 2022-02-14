@@ -12,4 +12,10 @@ public class ExceptionHandlerr {
     public ResponseEntity<Object> noFundsException(Exception exception){
         return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
     }
+
+    @ExceptionHandler(PlayerNotFoundException.class)
+    public ResponseEntity<Object> noPlayerFoundException(Exception exception){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
 }
