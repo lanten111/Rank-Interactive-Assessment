@@ -3,8 +3,10 @@ package com.example.rankinteractiveassessment.service;
 import com.example.rankinteractiveassessment.domain.Player;
 import com.example.rankinteractiveassessment.dto.PlayerDTO;
 import com.example.rankinteractiveassessment.exception.NoFundsException;
+import com.example.rankinteractiveassessment.exception.PlayerNotFoundException;
 import com.example.rankinteractiveassessment.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,13 +24,22 @@ public class PlayerService {
 
     @Transactional
     public void wager(PlayerDTO playerDTO){
-        Player player = playerRepository.getByPlayerId(playerDTO.getPlayerId());
-        BigDecimal newAmount = player.getAmount().subtract(playerDTO.getAmount());
-        if (newAmount.compareTo(BigDecimal.ZERO) <= 0){
-            throw new NoFundsException();
+        if (playerRepository.existsByPlayerId(playerDTO.getPlayerId())){
+//            if (!playerDTO.getPromotionCode().isEmpty()){
+//
+//            }
+            Player player = playerRepository.getByPlayerId(playerDTO.getPlayerId());
+            BigDecimal newAmount = player.getAmount().subtract(playerDTO.getAmount());
+            if (newAmount.compareTo(BigDecimal.ZERO) <= 0){
+                throw new NoFundsException();
+            } else {
+                player.setAmount(newAmount);
+                playerRepository.save(player);
+            }
+        } else {
+            throw new PlayerNotFoundException();
         }
-        player.setAmount(newAmount);
-        playerRepository.save(player);
+
     }
 
     @Transactional
