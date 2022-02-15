@@ -24,27 +24,13 @@ public class Player {
     private BigDecimal amount;
 
     @Column
+    private String transactionId;
+
+    @Column
     private String promotionCode;
 
     @Column
     private int promotionCodeCount;
-
-
-    public String getPromotionCode() {
-        return promotionCode;
-    }
-
-    public void setPromotionCode(String promotionCode) {
-        this.promotionCode = promotionCode;
-    }
-
-    public int getPromotionCodeCount() {
-        return promotionCodeCount;
-    }
-
-    public void setPromotionCodeCount(int promotionCodeCount) {
-        this.promotionCodeCount = promotionCodeCount;
-    }
 
     public Long getId() {
         return id;
@@ -76,5 +62,29 @@ public class Player {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getPromotionCode() {
+        return promotionCode;
+    }
+
+    public void setPromotionCode(String promotionCode) {
+        this.promotionCode = promotionCode;
+    }
+
+    public int getPromotionCodeCount() {
+        return promotionCodeCount;
+    }
+
+    public void setPromotionCodeCount(int promotionCodeCount) {
+        this.promotionCodeCount = promotionCodeCount;
     }
 }

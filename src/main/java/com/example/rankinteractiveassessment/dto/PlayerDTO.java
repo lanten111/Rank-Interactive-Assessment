@@ -1,7 +1,5 @@
 package com.example.rankinteractiveassessment.dto;
 
-import javax.persistence.Column;
-import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 
 public class PlayerDTO {
@@ -10,14 +8,7 @@ public class PlayerDTO {
     private String username;
     private BigDecimal amount;
     private String promotionCode;
-
-    public String getPromotionCode() {
-        return promotionCode;
-    }
-
-    public void setPromotionCode(String promotionCode) {
-        this.promotionCode = promotionCode;
-    }
+    private String transactionId;
 
     public String getPlayerId() {
         return playerId;
@@ -41,5 +32,21 @@ public class PlayerDTO {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public String getPromotionCode() {
+        return promotionCode;
+    }
+
+    public void setPromotionCode(String promotionCode) {
+        this.promotionCode = promotionCode;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 }
