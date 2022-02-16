@@ -3,7 +3,7 @@ package com.example.rankinteractiveassessment.domain;
 import javax.persistence.*;
 
 @Entity
-public class Promotion {
+public class PromotionCodes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,9 +1,9 @@
-package com.example.rankinteractiveassessment.service;
+package com.example.rankinteractiveassessment;
 
 import com.example.rankinteractiveassessment.domain.Player;
-import com.example.rankinteractiveassessment.domain.Promotion;
+import com.example.rankinteractiveassessment.domain.PromotionCodes;
 import com.example.rankinteractiveassessment.repository.PlayerRepository;
-import com.example.rankinteractiveassessment.repository.PromotionRepository;
+import com.example.rankinteractiveassessment.repository.PromotionCodesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -18,7 +18,7 @@ public class DataLoader implements ApplicationRunner {
     PlayerRepository playerRepository;
 
     @Autowired
-    PromotionRepository promotionRepository;
+    PromotionCodesRepository promotionCodesRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {Player player = new Player();
@@ -27,9 +27,12 @@ public class DataLoader implements ApplicationRunner {
         player.setPlayerId("12323");
         playerRepository.save(player);
 
-        Promotion promotion = new Promotion();
-        promotion.setCode("paper");
-        promotionRepository.save(promotion);
+        PromotionCodes promotionCodes = new PromotionCodes();
+        promotionCodes.setCode("paper");
+        PromotionCodes promotionCodes1 = new PromotionCodes();
+        promotionCodes1.setCode("paper2");
+        promotionCodesRepository.save(promotionCodes);
+        promotionCodesRepository.save(promotionCodes1);
 
     }
 }

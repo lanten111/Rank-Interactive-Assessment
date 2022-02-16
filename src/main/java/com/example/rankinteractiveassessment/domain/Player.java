@@ -3,6 +3,8 @@ package com.example.rankinteractiveassessment.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Player {
@@ -26,11 +28,13 @@ public class Player {
     @Column
     private String transactionId;
 
-    @Column
-    private String promotionCode;
+    @JoinColumn
+    @OneToMany
+    private List<PlayerPromotion> playerPromotion = new ArrayList<>();
 
-    @Column
-    private int promotionCodeCount;
+    @JoinColumn
+    @OneToMany
+    private List<PlayerTransaction> playerTransactions = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -72,19 +76,19 @@ public class Player {
         this.transactionId = transactionId;
     }
 
-    public String getPromotionCode() {
-        return promotionCode;
+    public List<PlayerPromotion> getPlayerPromotion() {
+        return playerPromotion;
     }
 
-    public void setPromotionCode(String promotionCode) {
-        this.promotionCode = promotionCode;
+    public void setPlayerPromotion(List<PlayerPromotion> playerPromotion) {
+        this.playerPromotion = playerPromotion;
     }
 
-    public int getPromotionCodeCount() {
-        return promotionCodeCount;
+    public List<PlayerTransaction> getPlayerTransactions() {
+        return playerTransactions;
     }
 
-    public void setPromotionCodeCount(int promotionCodeCount) {
-        this.promotionCodeCount = promotionCodeCount;
+    public void setPlayerTransactions(List<PlayerTransaction> playerTransactions) {
+        this.playerTransactions = playerTransactions;
     }
 }
